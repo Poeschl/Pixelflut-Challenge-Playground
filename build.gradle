@@ -38,7 +38,7 @@ test {
 
 jar {
     manifest {
-        attributes 'Main-Class': 'io.github.poeschl.challengeplayground.PlaygroundDrawerKt'
+        attributes 'Main-Class': 'io.github.poeschl.challengeplayground.ApplicationKt'
     }
 }
 
