@@ -21,20 +21,18 @@ class Playbox(private val origin: Point, private val size: Pair<Int, Int>) {
         drawInternalSplit(pixelFlutInterface)
     }
 
-    fun blank(pixelFlutInterface: Pixelflut) {
-        runBlocking {
-            launch {
-                blankSector(pixelFlutInterface, 0)
-            }
-            launch {
-                blankSector(pixelFlutInterface, 1)
-            }
-            launch {
-                blankSector(pixelFlutInterface, 2)
-            }
-            launch {
-                blankSector(pixelFlutInterface, 3)
-            }
+    fun blank(pixelFlutInterface: Pixelflut) = runBlocking {
+        launch {
+            blankSector(pixelFlutInterface, 0)
+        }
+        launch {
+            blankSector(pixelFlutInterface, 1)
+        }
+        launch {
+            blankSector(pixelFlutInterface, 2)
+        }
+        launch {
+            blankSector(pixelFlutInterface, 3)
         }
     }
 
@@ -55,37 +53,35 @@ class Playbox(private val origin: Point, private val size: Pair<Int, Int>) {
             else -> Pair(size.first / 2 - 1, size.second / 2 - 1)
         }
         pixelFlutInterface.paintPixelSet(
-                createRectPixels(origin, blankSize, DEFAULT_BACKGROUND_COLOR)
+            createRectPixels(origin, blankSize, DEFAULT_BACKGROUND_COLOR)
         )
     }
 
-    private fun drawBorder(pixelFlutInterface: Pixelflut) {
-        runBlocking {
-            launch {
-                pixelFlutInterface.paintPixelSet(createHorizontalPixels(origin, size.first, drawColor))
-            }
-            launch {
-                pixelFlutInterface.paintPixelSet(createVerticalPixels(origin, size.second, drawColor))
-            }
+    private fun drawBorder(pixelFlutInterface: Pixelflut) = runBlocking {
+        launch {
+            pixelFlutInterface.paintPixelSet(createHorizontalPixels(origin, size.first, drawColor))
+        }
+        launch {
+            pixelFlutInterface.paintPixelSet(createVerticalPixels(origin, size.second, drawColor))
+        }
 
-            launch {
-                pixelFlutInterface.paintPixelSet(
-                        createHorizontalPixels(
-                                origin.plus(Point(0, size.second - 1)),
-                                size.first,
-                                drawColor
-                        )
+        launch {
+            pixelFlutInterface.paintPixelSet(
+                createHorizontalPixels(
+                    origin.plus(Point(0, size.second - 1)),
+                    size.first,
+                    drawColor
                 )
-            }
-            launch {
-                pixelFlutInterface.paintPixelSet(
-                        createVerticalPixels(
-                                origin.plus(Point(size.first - 1, 0)),
-                                size.second,
-                                drawColor
-                        )
+            )
+        }
+        launch {
+            pixelFlutInterface.paintPixelSet(
+                createVerticalPixels(
+                    origin.plus(Point(size.first - 1, 0)),
+                    size.second,
+                    drawColor
                 )
-            }
+            )
         }
     }
 
@@ -94,25 +90,25 @@ class Playbox(private val origin: Point, private val size: Pair<Int, Int>) {
         val ySplit = size.second / SPLIT_COUNT
 
         runBlocking {
-            launch {
-                for (i: Int in 0 until SPLIT_COUNT) {
+            for (i: Int in 0 until SPLIT_COUNT) {
+                launch {
                     pixelFlutInterface.paintPixelSet(
-                            createVerticalPixels(
-                                    origin.plus(Point(xSplit * i, 0)),
-                                    size.second,
-                                    drawColor
-                            )
+                        createVerticalPixels(
+                            origin.plus(Point(xSplit * i, 0)),
+                            size.second,
+                            drawColor
+                        )
                     )
                 }
             }
-            launch {
-                for (i: Int in 0 until SPLIT_COUNT) {
+            for (i: Int in 0 until SPLIT_COUNT) {
+                launch {
                     pixelFlutInterface.paintPixelSet(
-                            createHorizontalPixels(
-                                    origin.plus(Point(0, ySplit * i)),
-                                    size.first,
-                                    drawColor
-                            )
+                        createHorizontalPixels(
+                            origin.plus(Point(0, ySplit * i)),
+                            size.first,
+                            drawColor
+                        )
                     )
                 }
             }
