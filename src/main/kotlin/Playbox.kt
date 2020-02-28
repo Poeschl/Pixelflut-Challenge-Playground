@@ -46,8 +46,16 @@ class Playbox(private val origin: Point, private val size: Pair<Int, Int>) {
             3 -> origin.plus(Point(1, 1 + size.second / SPLIT_COUNT))
             else -> origin.plus(Point(1, 1))
         }
+
+        val blankSize = when (sector) {
+            0 -> Pair(size.first / 2 - 1, size.second / 2 - 1)
+            1 -> Pair(size.first / 2 - 2, size.second / 2 - 1)
+            2 -> Pair(size.first / 2 - 2, size.second / 2 - 2)
+            3 -> Pair(size.first / 2 - 1, size.second / 2 - 2)
+            else -> Pair(size.first / 2 - 1, size.second / 2 - 1)
+        }
         pixelFlutInterface.paintPixelSet(
-            createRectPixels(origin, Pair(size.first / 2 - 1, size.second / 2 - 1), DEFAULT_BACKGROUND_COLOR)
+                createRectPixels(origin, blankSize, DEFAULT_BACKGROUND_COLOR)
         )
     }
 
@@ -62,20 +70,20 @@ class Playbox(private val origin: Point, private val size: Pair<Int, Int>) {
 
             launch {
                 pixelFlutInterface.paintPixelSet(
-                    createHorizontalPixels(
-                        origin.plus(Point(0, size.second - 1)),
-                        size.first,
-                        drawColor
-                    )
+                        createHorizontalPixels(
+                                origin.plus(Point(0, size.second - 1)),
+                                size.first,
+                                drawColor
+                        )
                 )
             }
             launch {
                 pixelFlutInterface.paintPixelSet(
-                    createVerticalPixels(
-                        origin.plus(Point(size.first - 1, 0)),
-                        size.second,
-                        drawColor
-                    )
+                        createVerticalPixels(
+                                origin.plus(Point(size.first - 1, 0)),
+                                size.second,
+                                drawColor
+                        )
                 )
             }
         }
@@ -89,22 +97,22 @@ class Playbox(private val origin: Point, private val size: Pair<Int, Int>) {
             launch {
                 for (i: Int in 0 until SPLIT_COUNT) {
                     pixelFlutInterface.paintPixelSet(
-                        createVerticalPixels(
-                            origin.plus(Point(xSplit * i, 0)),
-                            size.second,
-                            drawColor
-                        )
+                            createVerticalPixels(
+                                    origin.plus(Point(xSplit * i, 0)),
+                                    size.second,
+                                    drawColor
+                            )
                     )
                 }
             }
             launch {
                 for (i: Int in 0 until SPLIT_COUNT) {
                     pixelFlutInterface.paintPixelSet(
-                        createHorizontalPixels(
-                            origin.plus(Point(0, ySplit * i)),
-                            size.first,
-                            drawColor
-                        )
+                            createHorizontalPixels(
+                                    origin.plus(Point(0, ySplit * i)),
+                                    size.first,
+                                    drawColor
+                            )
                     )
                 }
             }
