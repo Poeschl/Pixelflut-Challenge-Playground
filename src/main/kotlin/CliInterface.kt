@@ -19,6 +19,7 @@ class CliInterface(private val playgroundPainter: PlaygroundDrawer, private val 
         println("Available commands:")
         println("quit -> Quit application")
         println("blank -> Wipes the whole screen")
+        println("blank center-> Wipes the centered challenge area")
         println("blank <id> -> Wipes one playground (left to right starting at 0 from top left)")
         println("blank <id> <sector> -> Wipes one playground sector (sector are counted clockwise, starting top left)")
     }
@@ -33,6 +34,7 @@ class CliInterface(private val playgroundPainter: PlaygroundDrawer, private val 
             }
             input == "dummy" -> playgroundPainter.dummy()
             input == "blank" -> playgroundPainter.blankAll()
+            input == "blank center" -> playgroundPainter.blankCenter()
             input.startsWith("blank") && splitedInput.size == 2 -> {
                 val boxId = splitedInput[1].toInt()
                 if (boxId >= 0 && boxId < playgroundPainter.numberPlayboxes())

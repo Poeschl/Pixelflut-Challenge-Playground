@@ -11,12 +11,12 @@ class PlaygroundDrawer(host: String, port: Int) : Painter() {
     companion object {
         private const val SPLIT_COUNT = 3
         private val FINAL_CHALLENGE_POSITION = floor(SPLIT_COUNT / 2.0).toInt()
-        private val FINAL_CHALLENGE_COLOR = Color.GRAY
     }
 
     private val pixelFlutInterface = Pixelflut(host, port)
     private val displaySize = pixelFlutInterface.getPlaygroundSize()
     private val playboxes = mutableListOf<Playbox>()
+    private lateinit var challengeArea: ChallengeArea
 
     override fun init() {
         println("Detected size $displaySize")
@@ -27,9 +27,7 @@ class PlaygroundDrawer(host: String, port: Int) : Painter() {
         for (y: Int in 0 until SPLIT_COUNT) {
             for (x: Int in 0 until SPLIT_COUNT) {
                 if (x == FINAL_CHALLENGE_POSITION && y == FINAL_CHALLENGE_POSITION) {
-                    val finalChallengeArea =
-                        createRectPixels(Point(xSlice * x, ySlice * y), Pair(xSlice, ySlice), FINAL_CHALLENGE_COLOR)
-                    pixelFlutInterface.paintPixelSet(finalChallengeArea)
+                    challengeArea = ChallengeArea(Point(xSlice * x, ySlice * y), Pair(xSlice, ySlice))
                 } else {
                     playboxes.add(Playbox(Point(xSlice * x, ySlice * y), Pair(xSlice, ySlice)))
                 }
@@ -39,6 +37,7 @@ class PlaygroundDrawer(host: String, port: Int) : Painter() {
     }
 
     override fun render() {
+        challengeArea.draw(pixelFlutInterface)
         playboxes.parallelStream().forEach { it.draw(pixelFlutInterface) }
     }
 
@@ -52,6 +51,10 @@ class PlaygroundDrawer(host: String, port: Int) : Painter() {
 
     fun numberSections(): Int {
         return 4
+    }
+
+    fun blankCenter() {
+        challengeArea.blank(pixelFlutInterface)
     }
 
     fun blankAll() {
