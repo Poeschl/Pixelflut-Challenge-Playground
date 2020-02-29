@@ -8,12 +8,15 @@ fun main(args: Array<String>) {
     ArgParser(args).parseInto(::Args).run {
         println("Start drawing on $host:$port")
         val drawer = PlaygroundDrawer(host, port)
-        println("Awaiting commands on $controlPort")
-        val restInterface = RestInterface(controlPort)
+        println("Awaiting commands on $host:$controlPort")
+        val restInterface = RestInterface(controlPort, drawer)
         val cliInterface = CliInterface(drawer, restInterface)
 
         thread {
             drawer.start()
+        }
+        thread {
+            restInterface.start()
         }
         thread {
             cliInterface.start()
