@@ -1,5 +1,6 @@
-package io.github.poeschl.pixelflutchallenge.borders
+package io.github.poeschl.challengeplayground
 
+import io.github.poeschl.challengeplayground.PlaygroundDrawer
 import io.ktor.application.call
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode

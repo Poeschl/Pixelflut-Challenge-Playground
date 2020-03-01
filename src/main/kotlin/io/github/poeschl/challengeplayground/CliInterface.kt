@@ -1,4 +1,4 @@
-package io.github.poeschl.pixelflutchallenge.borders
+package io.github.poeschl.challengeplayground
 
 class CliInterface(private val playgroundPainter: PlaygroundDrawer, private val restInterface: RestInterface) {
 

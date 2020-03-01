@@ -1,4 +1,4 @@
-package io.github.poeschl.pixelflutchallenge.borders
+package io.github.poeschl.challengeplayground
 
 import io.github.poeschl.kixelflut.*
 import kotlinx.coroutines.launch

@@ -1,4 +1,4 @@
-package io.github.poeschl.pixelflutchallenge.borders
+package io.github.poeschl.challengeplayground
 
 import com.xenomachina.argparser.ArgParser
 import com.xenomachina.argparser.default
@@ -9,7 +9,11 @@ fun main(args: Array<String>) {
         println("Start drawing on $host:$port")
         val drawer = PlaygroundDrawer(host, port)
         println("Awaiting commands on $host:$controlPort")
-        val restInterface = RestInterface(controlPort, drawer)
+        val restInterface =
+            RestInterface(
+                controlPort,
+                drawer
+            )
         val cliInterface = CliInterface(drawer, restInterface)
 
         thread {

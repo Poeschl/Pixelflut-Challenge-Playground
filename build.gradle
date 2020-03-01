@@ -42,6 +42,10 @@ jar {
     }
 }
 
+shadowJar {
+    classifier = null
+}
+
 repositories {
     jcenter()
     mavenCentral()
