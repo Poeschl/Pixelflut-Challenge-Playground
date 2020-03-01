@@ -1,7 +1,9 @@
 # Pixelflut Challenge Playground 
 
-This application draws a grid on a [Pixelflut](https://github.com/defnull/pixelflut) intended To solve several challenges.
+This application draws a grid on a [Pixelflut server](https://github.com/defnull/pixelflut) intended to solve several challenges.
 It has been used on last years [Hacky Easter](https://github.com/HacktoberfestMunich/Hacky-Easter-2019) and will be reused for following events.
+
+![Challenge Playground](https://raw.githubusercontent.com/Poeschl/Pixelflut-Challenge-Playground/master/docs/grid.png)
 
 ## Usage
 
