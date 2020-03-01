@@ -18,6 +18,11 @@ class RestInterface(port: Int, private val playgroundPainter: PlaygroundDrawer) 
                 println("Ping")
                 call.respondText("Ping", ContentType.Text.Plain)
             }
+            get("/blank/center") {
+                println("Blanking center (${call.request.local.remoteHost})")
+                playgroundPainter.blankCenter()
+                call.respond(HttpStatusCode.OK, "Blanked center")
+            }
             get("/blank/{id}") {
                 val id = call.parameters["id"]?.toInt()
                 if (id != null) {
