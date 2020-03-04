@@ -7,7 +7,7 @@ import io.github.poeschl.kixelflut.createRectPixels
 import java.awt.Color
 import kotlin.math.floor
 
-class PlaygroundDrawer(host: String, port: Int) : Painter() {
+class PlaygroundDrawer(private val host: String, private val port: Int) : Painter() {
     companion object {
         private const val SPLIT_COUNT = 3
         private val FINAL_CHALLENGE_POSITION = floor(SPLIT_COUNT / 2.0).toInt()
@@ -29,7 +29,7 @@ class PlaygroundDrawer(host: String, port: Int) : Painter() {
                 if (x == FINAL_CHALLENGE_POSITION && y == FINAL_CHALLENGE_POSITION) {
                     challengeArea = ChallengeArea(Point(xSlice * x, ySlice * y), Pair(xSlice, ySlice))
                 } else {
-                    playboxes.add(Playbox(Point(xSlice * x, ySlice * y), Pair(xSlice, ySlice)))
+                    playboxes.add(Playbox(Pixelflut(host, port), Point(xSlice * x, ySlice * y), Pair(xSlice, ySlice)))
                 }
             }
         }
@@ -38,10 +38,11 @@ class PlaygroundDrawer(host: String, port: Int) : Painter() {
 
     override fun render() {
         challengeArea.draw(pixelFlutInterface)
-        playboxes.parallelStream().forEach { it.draw(pixelFlutInterface) }
+        playboxes.parallelStream().forEach { it.draw() }
     }
 
     override fun afterStop() {
+        playboxes.parallelStream().forEach { it.close() }
         pixelFlutInterface.close()
     }
 
@@ -58,15 +59,15 @@ class PlaygroundDrawer(host: String, port: Int) : Painter() {
     }
 
     fun blankAll() {
-        playboxes.forEach { it.blank(pixelFlutInterface) }
+        playboxes.forEach { it.blank() }
     }
 
     fun blankPlaybox(boxId: Int) {
-        playboxes[boxId].blank(pixelFlutInterface)
+        playboxes[boxId].blank()
     }
 
     fun blankPlayboxSector(boxId: Int, sector: Int) {
-        playboxes[boxId].blankSector(pixelFlutInterface, sector)
+        playboxes[boxId].blankSector(sector)
     }
 
     fun dummy() {

@@ -6,7 +6,7 @@ import kotlinx.coroutines.runBlocking
 import java.awt.Color
 
 
-class Playbox(private val origin: Point, private val size: Pair<Int, Int>) {
+class Playbox(private val pixelflut: Pixelflut, private val origin: Point, private val size: Pair<Int, Int>) {
 
     companion object {
         private val DEFAULT_BORDER_COLOR = Color.WHITE
@@ -16,27 +16,27 @@ class Playbox(private val origin: Point, private val size: Pair<Int, Int>) {
 
     private var drawColor = DEFAULT_BORDER_COLOR
 
-    fun draw(pixelFlutInterface: Pixelflut) {
-        drawBorder(pixelFlutInterface)
-        drawInternalSplit(pixelFlutInterface)
+    fun draw() {
+        drawBorder()
+        drawInternalSplit()
     }
 
-    fun blank(pixelFlutInterface: Pixelflut) = runBlocking {
+    fun blank() = runBlocking {
         launch {
-            blankSector(pixelFlutInterface, 0)
+            blankSector(0)
         }
         launch {
-            blankSector(pixelFlutInterface, 1)
+            blankSector(1)
         }
         launch {
-            blankSector(pixelFlutInterface, 2)
+            blankSector(2)
         }
         launch {
-            blankSector(pixelFlutInterface, 3)
+            blankSector(3)
         }
     }
 
-    fun blankSector(pixelFlutInterface: Pixelflut, sector: Int) {
+    fun blankSector(sector: Int) {
         val origin = when (sector) {
             0 -> origin.plus(Point(1, 1))
             1 -> origin.plus(Point(1 + size.first / SPLIT_COUNT, 1))
@@ -52,21 +52,21 @@ class Playbox(private val origin: Point, private val size: Pair<Int, Int>) {
             3 -> Pair(size.first / 2 - 1, size.second / 2 - 2)
             else -> Pair(size.first / 2 - 1, size.second / 2 - 1)
         }
-        pixelFlutInterface.paintPixelSet(
+        pixelflut.paintPixelSet(
             createRectPixels(origin, blankSize, DEFAULT_BACKGROUND_COLOR)
         )
     }
 
-    private fun drawBorder(pixelFlutInterface: Pixelflut) = runBlocking {
+    private fun drawBorder() = runBlocking {
         launch {
-            pixelFlutInterface.paintPixelSet(createHorizontalPixels(origin, size.first, drawColor))
+            pixelflut.paintPixelSet(createHorizontalPixels(origin, size.first, drawColor))
         }
         launch {
-            pixelFlutInterface.paintPixelSet(createVerticalPixels(origin, size.second, drawColor))
+            pixelflut.paintPixelSet(createVerticalPixels(origin, size.second, drawColor))
         }
 
         launch {
-            pixelFlutInterface.paintPixelSet(
+            pixelflut.paintPixelSet(
                 createHorizontalPixels(
                     origin.plus(Point(0, size.second - 1)),
                     size.first,
@@ -75,7 +75,7 @@ class Playbox(private val origin: Point, private val size: Pair<Int, Int>) {
             )
         }
         launch {
-            pixelFlutInterface.paintPixelSet(
+            pixelflut.paintPixelSet(
                 createVerticalPixels(
                     origin.plus(Point(size.first - 1, 0)),
                     size.second,
@@ -85,14 +85,14 @@ class Playbox(private val origin: Point, private val size: Pair<Int, Int>) {
         }
     }
 
-    private fun drawInternalSplit(pixelFlutInterface: Pixelflut) {
+    private fun drawInternalSplit() {
         val xSplit = size.first / SPLIT_COUNT
         val ySplit = size.second / SPLIT_COUNT
 
         runBlocking {
             for (i: Int in 0 until SPLIT_COUNT) {
                 launch {
-                    pixelFlutInterface.paintPixelSet(
+                    pixelflut.paintPixelSet(
                         createVerticalPixels(
                             origin.plus(Point(xSplit * i, 0)),
                             size.second,
@@ -103,7 +103,7 @@ class Playbox(private val origin: Point, private val size: Pair<Int, Int>) {
             }
             for (i: Int in 0 until SPLIT_COUNT) {
                 launch {
-                    pixelFlutInterface.paintPixelSet(
+                    pixelflut.paintPixelSet(
                         createHorizontalPixels(
                             origin.plus(Point(0, ySplit * i)),
                             size.first,
@@ -113,5 +113,9 @@ class Playbox(private val origin: Point, private val size: Pair<Int, Int>) {
                 }
             }
         }
+    }
+
+    fun close() {
+        pixelflut.close()
     }
 }
