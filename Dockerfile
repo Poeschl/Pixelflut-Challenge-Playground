@@ -1,4 +1,4 @@
-FROM eclipse-temurin:17-alpine
+FROM eclipse-temurin:17-jdk-jammy
 
 WORKDIR /app
 ADD build/libs/pixelflut-challenge-playground-*.jar /app/pixelflut-challenge-playground.jar
