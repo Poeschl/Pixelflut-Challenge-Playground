@@ -1,4 +1,4 @@
-package io.github.poeschl.challengeplayground
+package xyz.poeschl.challengeplayground
 
 class CliInterface(private val playgroundPainter: PlaygroundDrawer, private val restInterface: RestInterface) {
 

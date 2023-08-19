@@ -1,9 +1,9 @@
-package io.github.poeschl.challengeplayground
+package xyz.poeschl.challengeplayground
 
-import io.github.poeschl.kixelflut.Painter
-import io.github.poeschl.kixelflut.Pixelflut
-import io.github.poeschl.kixelflut.Point
-import io.github.poeschl.kixelflut.createRectPixels
+import xyz.poeschl.kixelflut.Painter
+import xyz.poeschl.kixelflut.Pixelflut
+import xyz.poeschl.kixelflut.Point
+import xyz.poeschl.kixelflut.createRectPixels
 import java.awt.Color
 import kotlin.math.floor
 
@@ -14,7 +14,7 @@ class PlaygroundDrawer(private val host: String, private val port: Int) : Painte
     }
 
     private val pixelFlutInterface = Pixelflut(host, port)
-    private val displaySize = pixelFlutInterface.getPlaygroundSize()
+    private val displaySize = pixelFlutInterface.getScreenSize()
     private val playboxes = mutableListOf<Playbox>()
     private lateinit var challengeArea: ChallengeArea
 
@@ -71,10 +71,10 @@ class PlaygroundDrawer(private val host: String, private val port: Int) : Painte
     }
 
     fun dummy() {
-        pixelFlutInterface.paintPixelSet(
+        pixelFlutInterface.drawPixels(
             createRectPixels(
                 Point(0, 0),
-                pixelFlutInterface.getPlaygroundSize(),
+                pixelFlutInterface.getScreenSize(),
                 Color.CYAN
             )
         )

@@ -1,15 +1,11 @@
-package io.github.poeschl.challengeplayground
+package xyz.poeschl.challengeplayground
 
-import io.github.poeschl.challengeplayground.PlaygroundDrawer
-import io.ktor.application.call
-import io.ktor.http.ContentType
-import io.ktor.http.HttpStatusCode
-import io.ktor.response.respond
-import io.ktor.response.respondText
-import io.ktor.routing.get
-import io.ktor.routing.routing
-import io.ktor.server.engine.embeddedServer
-import io.ktor.server.netty.Netty
+import io.ktor.http.*
+import io.ktor.server.application.*
+import io.ktor.server.engine.*
+import io.ktor.server.netty.*
+import io.ktor.server.response.*
+import io.ktor.server.routing.*
 
 class RestInterface(port: Int, private val playgroundPainter: PlaygroundDrawer) {
 

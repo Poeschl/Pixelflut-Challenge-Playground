@@ -1,4 +1,4 @@
-package io.github.poeschl.challengeplayground
+package xyz.poeschl.challengeplayground
 
 import com.xenomachina.argparser.ArgParser
 import com.xenomachina.argparser.default

@@ -1,8 +1,8 @@
-package io.github.poeschl.challengeplayground
+package xyz.poeschl.challengeplayground
 
-import io.github.poeschl.kixelflut.Pixelflut
-import io.github.poeschl.kixelflut.Point
-import io.github.poeschl.kixelflut.createRectPixels
+import xyz.poeschl.kixelflut.Pixelflut
+import xyz.poeschl.kixelflut.Point
+import xyz.poeschl.kixelflut.createRectPixels
 import java.awt.Color
 
 class ChallengeArea(private val origin: Point, private val size: Pair<Int, Int>) {
@@ -16,13 +16,13 @@ class ChallengeArea(private val origin: Point, private val size: Pair<Int, Int>)
 
     fun draw(pixelflut: Pixelflut) {
         if (!initialized) {
-            pixelflut.paintPixelSet(createRectPixels(origin, size, INITAL_COLOR))
+            pixelflut.drawPixels(createRectPixels(origin, size, INITAL_COLOR))
             initialized = true
         }
     }
 
     fun blank(pixelflut: Pixelflut) {
-        pixelflut.paintPixelSet(createRectPixels(origin, size, DEFAULT_BACKGROUND_COLOR))
+        pixelflut.drawPixels(createRectPixels(origin, size, DEFAULT_BACKGROUND_COLOR))
     }
 
 }
