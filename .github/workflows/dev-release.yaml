@@ -62,7 +62,7 @@ jobs:
       - name: 🚀 Build and push
         uses: docker/build-push-action@v4
         with:
-          context: backend
+          context: .
           file: Dockerfile
           push: true
           tags: ghcr.io/poeschl/pixelflut-challenge-playground:latest
