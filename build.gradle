@@ -17,6 +17,7 @@ test {
 }
 
 jar {
+    archivesBaseName = 'pixelflut-challenge-playground'
     manifest {
         attributes 'Main-Class': 'xyz.poeschl.challengeplayground.ApplicationKt'
     }
