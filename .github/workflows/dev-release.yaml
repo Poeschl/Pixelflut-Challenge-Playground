@@ -45,7 +45,7 @@ jobs:
 
       - name: ℹ️ Docker meta
         id: docker_meta
-        uses: docker/metadata-action@v4
+        uses: docker/metadata-action@v5
         with:
           images: ghcr.io/poeschl/pixelflut-challenge-playground:latest
 
